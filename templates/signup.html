@@ -1,0 +1,25 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>Create account now!</h1>
+        <form method=POST id="form">
+            <input type="email" name="email">
+            <input type="password" name="password" id="password0">
+            <input type="password" id="password1">
+        </form>
+        <button onClick="submit();">Create account!</button>
+
+        <script>
+            function submit(){
+                if(document.getElementById("password1").value == document.getElementById("password0").value){
+                    document.getElementById("form").submit();
+                }
+                else{
+                    alert("Passwords needs to be the same");
+                }
+            }
+        </script>
+    </body>
+</html>
