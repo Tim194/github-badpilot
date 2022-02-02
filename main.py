@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import login
 app = Flask(__name__)
 
 #Website index
@@ -9,6 +10,11 @@ def index():
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
     if(request.method == "POST"):
+        email = request.form['email']
+        password = request.form["password"]
+
+        login.create(email,password)
+
         return render_template("signup.html")
     else:
         return render_template("signup.html")

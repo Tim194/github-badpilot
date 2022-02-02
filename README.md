@@ -4,3 +4,6 @@ Github-badpilot will not only compleat the curent line you are writing as most o
 
 ## How it workes
 It workes by having an databas with evrything from singel lines of code to hole classes or even hole files. Then when you have writen a comment github badpilot will then do a seartch in our databas and then past in the cloases match.
+
+## What is next
+https://trello.com/invite/b/Nm1ZmAiz/ccedb9b6de370de0826adedfa8396aa2/github-badpilot 

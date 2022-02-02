@@ -1,7 +1,9 @@
+import json
 import hashlib
+import random
 
 MIN_PASSWORD_LEN = 5
-SALT = "4RNZddeq!qlzS7h96M7vyevj6d3tPBzX3ZjgsTmROOkeWLFRwdt1QHNA7qKE"
+SALT = str("4RNZddeqqlzS7h96M7vyevj6d3tLOLSALTPBzX3ZjgsTmROOkeWLFRwdt1QHNA7qKE")
 
 class Error:
     def __init__(self, error):
@@ -9,6 +11,39 @@ class Error:
 
     def __bool__(self):
         return False
+
+class User:
+    def __init__(self):
+        self.email = None
+        self.documentIds = None
+        self.password = None
+        self.id = None
+
+    def toJson(self):
+        data = {
+            "email": self.email,
+            "password": self.password,
+            "documents": self.documentIds,
+            "id": self.id
+        }
+
+        return data
+
+    def loadJson(self, data):
+        self.documentIds = data["documents"]
+        self.email = data["email"]
+        self.password = data["password"]
+        self.id = data["id"]
+
+    def save(self):
+        with open("users/" + str(self.id) + ".json", 'w') as outfile:
+            json.dump(self.toJson(), outfile)
+
+    def load(self, path):
+
+        with open(path) as json_file:
+            self.loadJson(json.load(json_file))
+
 
 
 def create(email, password):
@@ -21,11 +56,21 @@ def create(email, password):
 
     password = hash512(password)
 
+    user = User()
+    user.email = email
+    user.password = password
+    user.id = random.randint(0,9999999999999)
+
+    user.save()
+
+
+
+
 
 
 
 def hash512(password):
-    return hashlib.sha512( SALT + password ).hexdigest()
+    return hashlib.sha512( SALT ).hexdigest()
 
 
 def passwordCheck(password):
