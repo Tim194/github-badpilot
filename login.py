@@ -1,6 +1,7 @@
 import json
 import hashlib
 import random
+from os import walk
 
 MIN_PASSWORD_LEN = 5
 SALT = str("4RNZddeqqlzS7h96M7vyevj6d3tLOLSALTPBzX3ZjgsTmROOkeWLFRwdt1QHNA7qKE")
@@ -44,6 +45,9 @@ class User:
         with open(path) as json_file:
             self.loadJson(json.load(json_file))
 
+    def __str__(self):
+        return str(self.toJson())
+
 
 
 def create(email, password):
@@ -54,6 +58,9 @@ def create(email, password):
     if(not emailCheck(email)):
         return Error("Email dont meet our requerments for a email")
 
+    if(getUserFromEmail(email)):
+        return Error("Email alrady in use")
+
     password = hash512(password)
 
     user = User()
@@ -63,14 +70,32 @@ def create(email, password):
 
     user.save()
 
+    return True
 
 
+def getAllUsers():
 
+    filenames = next(walk("users/"), (None, None, []))[2]
 
+    users = []
+
+    for file in filenames:
+        users.append(User().load("users/" + file))
+
+    return users
+#returns user from email. If no user exists return false
+def getUserFromEmail(email):
+    users = getAllUsers()
+    print(users)
+    for user in users:
+        if(user.email == email):
+            return user
+
+    return False
 
 
 def hash512(password):
-    return hashlib.sha512( SALT ).hexdigest()
+    return hashlib.sha256( (SALT + password).encode() ).hexdigest() 
 
 
 def passwordCheck(password):

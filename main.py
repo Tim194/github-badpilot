@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+import errno
+from flask import Flask, render_template, request,redirect
 import login
 app = Flask(__name__)
 
@@ -13,9 +14,12 @@ def signup():
         email = request.form['email']
         password = request.form["password"]
 
-        login.create(email,password)
+        data = login.create(email,password)
 
-        return render_template("signup.html")
+        if(data):
+
+            return redirect("/")
+        return render_template("signup.html", error=data.text)
     else:
         return render_template("signup.html")
 
