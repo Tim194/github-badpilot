@@ -83,6 +83,7 @@ def getAllUsers():
         users.append(User().load("users/" + file))
 
     return users
+    
 #returns user from email. If no user exists return false
 def getUserFromEmail(email):
     users = getAllUsers()
