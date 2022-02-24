@@ -14,6 +14,11 @@ def index():
 
 @app.route("/login", methods=["GET","POST"])
 def loginPage():
+    u = getUser()
+    if(u):
+        return redirect("/")
+
+
     if(request.method == "POST"):
         email = request.form['email']
         password = request.form["password"]
@@ -29,6 +34,10 @@ def loginPage():
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
+    u = getUser()
+    if(u):
+        return redirect("/")
+
     if(request.method == "POST"):
         email = request.form['email']
         password = request.form["password"]
@@ -41,6 +50,11 @@ def signup():
         return render_template("signup.html", error=data.text)
     else:
         return render_template("signup.html")
+
+@app.route("/logout")
+def logout():
+    session["pId"] = None
+    return redirect("/")
 
 
 publicIds = []
