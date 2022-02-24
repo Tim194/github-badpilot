@@ -41,16 +41,19 @@ class User:
             json.dump(self.toJson(), outfile)
 
     def load(self, path):
-
-        with open(path) as json_file:
+        print(path)
+        with open(path, "r") as json_file:
             self.loadJson(json.load(json_file))
 
     def __str__(self):
-        return str(self.toJson())
+        output = str(self.toJson())
+
+        return output
 
 
 
 def create(email, password):
+    
 
     if(not passwordCheck(password)):
         return Error("Password dont meet our requerments for a secure password")
@@ -80,7 +83,12 @@ def getAllUsers():
     users = []
 
     for file in filenames:
-        users.append(User().load("users/" + file))
+        print(file)
+
+        u = User()
+        u.load("users/" + file)
+        users.append(u)
+        print(u)
 
     return users
     
