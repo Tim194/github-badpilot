@@ -124,4 +124,19 @@ def emailCheck(email):
             return True
     
     return False
+
+
+def login(email, password):
+    password = hash512(password)
+
+    u = getUserFromEmail(email)
+
+    if(u):
+
+        if(u.password == password):
+            return u
+        else:
+            return Error("Wrong email or password")
+    else:
+        return Error("Wrong email or password")
     

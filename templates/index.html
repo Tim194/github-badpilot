@@ -5,8 +5,12 @@
 
     <body>
         <br>
+        {% if u %}
+        <h1>Welcome back {{ u.email }}</h1>
+        {% else %}
         <a href="/login">Login</a>
         <a href="/signup">Create account</a>
+        {% endif %}
         <br>
         <hr>
     </body>
