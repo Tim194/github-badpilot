@@ -45,8 +45,9 @@ def signup():
         data = login.create(email,password)
 
         if(data):
-
-            return redirect("/")
+            u = data
+            loginUser(u)
+            return redirect("/login")
         return render_template("signup.html", error=data.text)
     else:
         return render_template("signup.html")
