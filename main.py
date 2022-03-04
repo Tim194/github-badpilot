@@ -28,7 +28,7 @@ def loginPage():
         if(data):
             u = data
             loginUser(u)
-            return redirect("/")
+            return redirect("/docs")
         return render_template("login.html", error=data.text)
     return render_template("login.html")
 
@@ -47,7 +47,7 @@ def signup():
         if(data):
             u = data
             loginUser(u)
-            return redirect("/login")
+            return redirect("/docs")
         return render_template("signup.html", error=data.text)
     else:
         return render_template("signup.html")
@@ -57,11 +57,31 @@ def logout():
     session["pId"] = None
     return redirect("/")
 
+@app.route("/docs")
+def documentList():
+    u = getUser()
+    if(not u):
+        return redirect("/login")
+
+    return render_template("docs.html")
+
+@app.route("/docs/create", methods=("POST", "GET"))
+def createDocs():
+    u = getUser()
+    if(not u):
+        return redirect("/login")
+    
+    if(request.method == "POST"):
+        pass
+
+    return render_template("createDocs.html")
+
+    
 
 publicIds = []
 activeUsers = []
 
-
+# takes user class as input
 def loginUser(u):
     publicId = random.randint(0,999999999999999)
 
@@ -78,6 +98,7 @@ def loginUser(u):
 
     session["pId"] = publicId
 
+#if the user is loged in it returns the user class while if the user is not loged in the func returns false
 def getUser():
     if("pId" in session):
         for pId in publicIds:

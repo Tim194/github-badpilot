@@ -16,7 +16,7 @@ class Error:
 class User:
     def __init__(self):
         self.email = None
-        self.documentIds = None
+        self.documentIds = []
         self.password = None
         self.id = None
 
@@ -53,7 +53,7 @@ class User:
 
 
 def create(email, password):
-    
+    email = email.lower()
 
     if(not passwordCheck(password)):
         return Error("Password dont meet our requerments for a secure password")
@@ -73,7 +73,7 @@ def create(email, password):
 
     user.save()
 
-    return True
+    return user
 
 
 def getAllUsers():
@@ -94,6 +94,8 @@ def getAllUsers():
     
 #returns user from email. If no user exists return false
 def getUserFromEmail(email):
+    email = email.lower()
+
     users = getAllUsers()
     print(users)
     for user in users:
@@ -115,6 +117,7 @@ def passwordCheck(password):
         return True
 
 def emailCheck(email):
+    email = email.lower()
     if("@" in email and type(email) == type("") and not "'" in email and not '"' in email):
         email = email.split("@")
         domain = email[1]
@@ -127,6 +130,8 @@ def emailCheck(email):
 
 
 def login(email, password):
+    email = email.lower()
+
     password = hash512(password)
 
     u = getUserFromEmail(email)
