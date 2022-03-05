@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request,redirect, session
 import login
 import random
+import docs
 app = Flask(__name__)
 app.secret_key = "EGTRQwerqwg56hrt6u5w45qa34t8i56e4fLOLOLedfw"
 
@@ -72,7 +73,10 @@ def createDocs():
         return redirect("/login")
     
     if(request.method == "POST"):
-        pass
+        title = request.form["title"]
+        lang = request.form["lang"]
+
+        docs.create(title, lang, u)
 
     return render_template("createDocs.html")
 
